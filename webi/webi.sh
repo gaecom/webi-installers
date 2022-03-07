@@ -1,32 +1,4 @@
 #!/bin/bash
-
-#set -x
-
-function __install_webi() {
-
-    #WEBI_PKG=
-    #WEBI_HOST=https://webinstall.dev
-    export WEBI_HOST
-
-    echo ""
-    printf "Thanks for using webi to install '\e[32m${WEBI_PKG:-}\e[0m' on '\e[31m$(uname -s)/$(uname -m)\e[0m'.\n"
-    echo "Have a problem? Experience a bug? Please let us know:"
-    echo "        https://github.com/webinstall/webi-installers/issues"
-    echo ""
-    printf "\e[31mLovin'\e[0m it? Say thanks with a \e[34mStar on GitHub\e[0m:\n"
-    printf "        \e[32mhttps://github.com/webinstall/webi-installers\e[0m\n"
-    echo ""
-
-    WEBI_WELCOME=true
-    export WEBI_WELCOME
-
-    set -e
-    set -u
-
-    mkdir -p "$HOME/.local/bin"
-
-    cat << 'EOF' > "$HOME/.local/bin/webi"
-#!/bin/bash
 set -e
 set -u
 #set -x
@@ -202,22 +174,3 @@ function __webi_main() {
 }
 
 __webi_main "$@"
-
-EOF
-
-    chmod a+x "$HOME/.local/bin/webi"
-
-    if [[ -n ${WEBI_PKG:-} ]]; then
-        "$HOME/.local/bin/webi" "${WEBI_PKG}"
-    else
-        echo ""
-        echo "Hmm... no WEBI_PKG was specified. This is probably an error in the script."
-        echo ""
-        echo "Please open an issue with this information: Package '${WEBI_PKG:-}' on '$(uname -s)/$(uname -m)'"
-        echo "    https://github.com/webinstall/packages/issues"
-        echo ""
-    fi
-
-}
-
-__install_webi
